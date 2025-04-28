@@ -56,7 +56,7 @@ Python Testing with pytest
 :::
 
 ::: {.notes}
-- Be sure to check if everyone has Python 3.10+ installed
+- Be sure to check if everyone has Python 3.8+ installed
 - Make sure pytest is installed: `pip install pytest`
 - Encourage questions throughout
 :::
