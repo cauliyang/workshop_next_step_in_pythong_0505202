@@ -1,25 +1,23 @@
 class ShoppingCart:
-    """A simple shopping cart implementation."""
+    """A simple shopping cart implementation.
+
+    This implementation supports both the basic example from the slides
+    and the more advanced features with quantity.
+    """
 
     def __init__(self):
         """Initialize an empty shopping cart."""
         self.items = {}
-        self._discount_percentage = 0
+        self._discount = 0
 
-    def add_item(self, name, price, quantity=1):
+    def add_item(self, name, price):
         """Add an item to the cart.
 
         Args:
             name (str): The name of the item
             price (float): The price per unit
-            quantity (int, optional): The quantity to add. Defaults to 1.
         """
-        if name in self.items:
-            # Update existing item quantity
-            self.items[name]["quantity"] += quantity
-        else:
-            # Add new item
-            self.items[name] = {"price": price, "quantity": quantity}
+        self.items[name] = price
 
     def remove_item(self, name):
         """Remove an item from the cart.
@@ -36,7 +34,7 @@ class ShoppingCart:
         Args:
             percentage (float): The percentage discount to apply
         """
-        self._discount_percentage = percentage
+        self._discount = percentage / 100
 
     def total(self):
         """Calculate the total price of all items in the cart.
@@ -44,10 +42,7 @@ class ShoppingCart:
         Returns:
             float: The total price
         """
-        subtotal = sum(item["price"] * item["quantity"] for item in self.items.values())
+        subtotal = sum(self.items.values())
 
-        if self._discount_percentage > 0:
-            discount = subtotal * (self._discount_percentage / 100)
-            return subtotal - discount
-
-        return subtotal
+        # Apply discount
+        return subtotal * (1 - self._discount)

@@ -182,35 +182,77 @@ E. Other (share in chat)
 
 ## TDD Demo: Building a Shopping Cart
 
-Let's apply TDD to build a simple shopping cart with:
+Let's apply TDD to build a simple shopping cart:
 
-1. Add items
-2. Remove items
-3. Calculate total
-4. Apply discounts
+```python
+# First write a failing test (RED phase)
+def test_add_item():
+    cart = ShoppingCart()
+    cart.add_item("apple", 1.0)
+    assert cart.total() == 1.0
+```
 
-## TDD Live Exercise
+```python
+# Then implement minimal code to pass (GREEN phase)
+class ShoppingCart:
+    def __init__(self):
+        self.items = {}
+    
+    def add_item(self, name, price):
+        self.items[name] = price
+        
+    def total(self):
+        return sum(self.items.values())
+```
 
-::: {.exercise}
-**Try it yourself!**
+## TDD Demo: Continued
 
-1. Write a test for a `calculate_statistics` function
-2. Function should return min, max, and average of a list
-3. Implement the function to pass the test
-4. Refactor if needed
-:::
+Now let's extend with another test:
 
-## Discussion Question
+```python
+# RED phase - new test for discount
+def test_apply_discount():
+    cart = ShoppingCart()
+    cart.add_item("apple", 10.0)
+    cart.apply_discount(10)  # 10% discount
+    assert cart.total() == 9.0
+```
 
-::: {.poll}
-**How might TDD change your current development workflow?**
+```python
+# GREEN phase - extend implementation
+def apply_discount(self, percentage):
+    self._discount = percentage / 100
+    
+def total(self):
+    subtotal = sum(self.items.values())
+    return subtotal * (1 - self._discount))
+```
 
-A. It would slow me down initially  
-B. It would help me clarify requirements  
-C. It would improve my code quality  
-D. It wouldn't work well for my projects  
-E. Other (share in chat)
-:::
+## Alternative TDD Demo: Statistics Function
+
+A simpler example for a short workshop:
+
+```python
+# RED phase - write test first
+def test_calculate_statistics():
+    numbers = [1, 2, 3, 4, 5]
+    stats = calculate_statistics(numbers)
+    assert stats["min"] == 1
+    assert stats["max"] == 5
+    assert stats["average"] == 3.0
+```
+
+```python
+# GREEN phase - implement function
+def calculate_statistics(numbers):
+    if not numbers:
+        raise ValueError("Cannot calculate statistics of empty list")
+    return {
+        "min": min(numbers),
+        "max": max(numbers),
+        "average": sum(numbers) / len(numbers)
+    }
+```
 
 # Q&A and Wrap-up {background-color="#1c1c1c"}
 
