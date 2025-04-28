@@ -4,145 +4,261 @@ author: "Yangyang Li"
 date: "May 5, 2025"
 format:
   revealjs:
-    theme: simple
-    transition: slide
+    theme: moon
+    transition: fade
     slide-number: true
     incremental: true
     code-fold: false
     highlight-style: github
     scrollable: true
+    css: custom.css
+    footer: "Python Testing Workshop | Yangyang Li | May 2025"
+    logo: "https://pytest.org/en/7.3.x/_static/pytest_logo_curves.svg"
 ---
 
-## Welcome!
+## {.center .middle background-color="#053660"}
 
-### Python Testing with pytest
-*A one-hour workshop on making your code more reliable*
+:::{.r-fit-text}
+Python Testing with pytest
+:::
 
-- Please ensure you have Python 3.10+ installed
-- Install pytest: `pip install pytest`
-- Download workshop materials from the repository
+:::{.subtitle}
+*Making your code more reliable in 1 hour*
+:::
 
-## Workshop Structure (1 hour)
+## Workshop Agenda {.smaller}
 
-1. Introduction to Testing (10 min)
-2. Getting Started with pytest (15 min)
-3. Writing Effective Test Cases (15 min)
-4. Test-Driven Development in Practice (15 min)
-5. Q&A and Wrap-up (5 min)
+::: {.columns}
+::: {.column width="60%"}
+1. **Introduction to Testing** (10 min)
+   - Why test?
+   - Types of tests
+   - Testing terminology
 
-# Part 1: Introduction to Testing {background-color="#1c1c1c"}
+2. **Getting Started with pytest** (15 min)
+   - Basic structure
+   - Running tests
+   - Understanding results
 
-## Why Test Your Code?
+3. **Writing Effective Tests** (15 min)
+   - Test design patterns
+   - Parameterization
+:::
 
-- Find bugs before your users do
-- Make changes with confidence
-- Document how your code should work
-- Enable refactoring and code improvement
-- Professional development practice
+::: {.column width="40%"}
+4. **Test-Driven Development** (15 min)
+   - Red-Green-Refactor cycle
+   - TDD in practice
+   - Benefits & challenges
 
-## Poll Question
+5. **Q&A and Wrap-up** (5 min)
+:::
+:::
 
-::: {.poll}
+::: {.notes}
+- Be sure to check if everyone has Python 3.10+ installed
+- Make sure pytest is installed: `pip install pytest`
+- Encourage questions throughout
+:::
+
+# Introduction to Testing {background-color="#053660" .center}
+
+## Why Test Your Code? {.smaller}
+
+::: {.incremental}
+- **Find bugs early** — Before your users do
+- **Refactor with confidence** — Change code without fear
+- **Documentation** — Tests show how code should work
+- **Design improvement** — Testing forces better architecture
+- **Professional practice** — Industry standard skill
+:::
+
+::: {.fragment .fade-in-then-semi-out}
+::::{.callout-tip}
+#### Test Early, Test Often
+"Code without tests is broken by design." — Jacob Kaplan-Moss
+::::
+:::
+
+## Poll Question {.poll background-color="#0a0a0a"}
+
+::: {.poll-question}
 **How much experience do you have with testing Python code?**
+:::
 
+:::{.columns}
+:::{.column width="50%"}
 A. None - I'm completely new to testing  
 B. Minimal - I've written a few basic tests  
+:::
+:::{.column width="50%"}
 C. Moderate - I use pytest occasionally  
 D. Experienced - I practice TDD regularly
 :::
+:::
 
-## Types of Tests
+## Testing Pyramid {.smaller}
 
-- **Unit tests**: Test individual functions/methods in isolation
-- **Integration tests**: Test multiple components working together
-- **Functional tests**: Test the complete application flow
-- **Regression tests**: Ensure bugs don't return
+![](https://miro.medium.com/max/1400/1*Tcj3OsK8Kou7tCMQgeeCuw.png){width="70%" fig-align="center"}
 
-## Testing Terminology
+::: {.columns}
+::: {.column width="50%"}
+**Unit tests**
+- Test individual functions
+- Fast, isolated
+- Many tests
+:::
 
-- **Test case**: A function that tests a specific feature
-- **Fixtures**: Setup code for tests
-- **Assertions**: Statements that verify expected outcomes
-- **Mocks/Stubs**: Replace real objects with testing versions
-- **Coverage**: Measurement of code tested
+::: {.column width="50%"}
+**Integration tests**
+- Test component interaction
+- Fewer, more complex
+:::
+:::
 
-# Part 2: Getting Started with pytest {background-color="#1c1c1c"}
+# Getting Started with pytest {background-color="#053660" .center}
 
-## Why pytest?
+## Why pytest? {.smaller}
 
-- Simple syntax compared to unittest
-- Rich assertion introspection
-- Powerful fixture system
-- Extensive plugin ecosystem
-- Easy parametrization
+::: {.columns}
+::: {.column width="50%"}
+**Advantages**
+- Simple, Pythonic syntax
+- Rich assertion messages
+- Powerful fixtures & plugins
+- Easy parameterization
+:::
 
-## Basic pytest Structure
+::: {.column width="50%"}
+**vs. unittest**
+```python
+# unittest
+self.assertEqual(1 + 1, 2)
+
+# pytest - simpler!
+assert 1 + 1 == 2
+```
+:::
+:::
+
+::: {.fragment}
+```bash
+# Installation
+pip install pytest
+```
+:::
+
+## Basic pytest Structure {.smaller}
 
 ```python
 # test_example.py
 def test_addition():
+    # Simple assertions
     assert 1 + 1 == 2
     
 def test_string_methods():
+    # pytest shows values on failure
     assert "hello".upper() == "HELLO"
     assert "world".capitalize() == "World"
 ```
 
-Run with: `pytest test_example.py -v`
+::: {.fragment}
+```bash
+# Run with:
+pytest test_example.py -v
 
-## Live Exercise
-
-::: {.exercise}
-**Let's write a test together!**
-
-1. Create a file called `calculator.py` with a simple add function
-2. Create `test_calculator.py` with a test for the add function
-3. Run pytest and see the results
+# Output:
+# test_example.py::test_addition PASSED
+# test_example.py::test_string_methods PASSED
+```
 :::
 
-## Poll Question
+## Live Exercise {.exercise}
 
-::: {.poll}
-**What's the most challenging part of testing for you?**
-
-A. Setting up test environments  
-B. Writing effective assertions  
-C. Knowing what to test  
-D. Finding time to write tests  
-E. Something else (share in chat)
+::: {.callout-note}
+### Let's write a test together!
 :::
 
-# Part 3: Writing Effective Test Cases {background-color="#1c1c1c"}
+1. Create `calculator.py` with basic functions:
+   ```python
+   def add(a, b): 
+       return a + b
+   ```
 
-## Anatomy of a Good Test
+2. Write `test_calculator.py`:
+   ```python
+   from calculator import add
+   
+   def test_add():
+       assert add(1, 2) == 3
+       assert add(-1, 1) == 0
+   ```
 
-- **Arrange**: Set up test data and conditions
-- **Act**: Execute the code being tested
-- **Assert**: Verify the results match expectations
+3. Run: `pytest test_calculator.py -v`
 
-## Example: Testing a User Class
+# Writing Effective Tests {background-color="#053660" .center}
 
+## The AAA Pattern {auto-animate=true}
+
+:::{.r-fit-text}
+**A**rrange → **A**ct → **A**ssert
+:::
+
+## The AAA Pattern {auto-animate=true .smaller}
+
+::: {.columns}
+::: {.column width="60%"}
 ```python
-# user.py
+# Testing a User class
+def test_valid_email():
+    # Arrange
+    user = User('Test', 'test@example.com')
+    
+    # Act
+    result = user.is_valid_email()
+    
+    # Assert
+    assert result is True
+```
+:::
+
+::: {.column width="40%"}
+```python
 class User:
     def __init__(self, name, email):
         self.name = name
         self.email = email
         
     def is_valid_email(self):
-        return '@' in self.email and '.' in self.email
-
-# test_user.py
-def test_valid_email():
-    # Arrange
-    user = User('Test', 'test@example.com')
-    # Act
-    result = user.is_valid_email()
-    # Assert
-    assert result is True
+        return ('@' in self.email 
+                and '.' in self.email)
 ```
+:::
+:::
 
-## Parameterized Tests
+## Parameterized Tests {.smaller}
+
+:::{.columns}
+:::{.column}
+**Before**
+
+```python
+def test_email_valid():
+    user = User('Test', 'test@example.com')
+    assert user.is_valid_email() is True
+
+def test_email_invalid_no_at():
+    user = User('Test', 'invalid-email')
+    assert user.is_valid_email() is False
+    
+def test_email_invalid_no_dot():
+    user = User('Test', 'invalid@nodotatall')
+    assert user.is_valid_email() is False
+```
+:::
+
+:::{.column}
+**After**
 
 ```python
 import pytest
@@ -157,43 +273,51 @@ def test_email_validation(email, expected):
     user = User('Test', email)
     assert user.is_valid_email() is expected
 ```
-
-## Audience Question
-
-::: {.poll}
-**What elements of your code are you most interested in testing?**
-
-A. Functions with calculations  
-B. Data validation logic  
-C. API interactions  
-D. Database operations  
-E. Other (share in chat)
+:::
 :::
 
-# Part 4: Test-Driven Development {background-color="#1c1c1c"}
+## Poll Question {.poll background-color="#0a0a0a"}
 
-## The TDD Cycle
+::: {.poll-question}
+**What are you most interested in testing?**
+:::
 
+:::{.columns}
+:::{.column width="50%"}
+A. Functions with calculations  
+B. Data validation logic  
+:::
+:::{.column width="50%"}
+C. API interactions  
+D. Database operations
+:::
+:::
+
+# Test-Driven Development {background-color="#053660" .center}
+
+## The TDD Cycle {.center}
+
+![](https://upload.wikimedia.org/wikipedia/commons/0/0b/TDD_Global_Lifecycle.png){width="70%" fig-align="center"}
+
+::: {.incremental}
 1. **Red**: Write a failing test
-2. **Green**: Write the simplest code that passes
-3. **Refactor**: Improve code without changing behavior
+2. **Green**: Write minimal code to pass
+3. **Refactor**: Improve without breaking tests
+:::
 
-![TDD Cycle: Red-Green-Refactor](https://upload.wikimedia.org/wikipedia/commons/0/0b/TDD_Global_Lifecycle.png)
+## TDD Demo: Shopping Cart {.smaller}
 
-## TDD Demo: Building a Shopping Cart
-
-Let's apply TDD to build a simple shopping cart:
-
+:::{.panel-tabset}
+### Red Phase
 ```python
-# First write a failing test (RED phase)
 def test_add_item():
     cart = ShoppingCart()
     cart.add_item("apple", 1.0)
     assert cart.total() == 1.0
 ```
 
+### Green Phase
 ```python
-# Then implement minimal code to pass (GREEN phase)
 class ShoppingCart:
     def __init__(self):
         self.items = {}
@@ -205,12 +329,8 @@ class ShoppingCart:
         return sum(self.items.values())
 ```
 
-## TDD Demo: Continued
-
-Now let's extend with another test:
-
+### Next Test
 ```python
-# RED phase - new test for discount
 def test_apply_discount():
     cart = ShoppingCart()
     cart.add_item("apple", 10.0)
@@ -218,22 +338,22 @@ def test_apply_discount():
     assert cart.total() == 9.0
 ```
 
+### Implementation
 ```python
-# GREEN phase - extend implementation
 def apply_discount(self, percentage):
     self._discount = percentage / 100
     
 def total(self):
     subtotal = sum(self.items.values())
-    return subtotal * (1 - self._discount))
+    return subtotal * (1 - getattr(self, '_discount', 0))
 ```
+:::
 
-## Alternative TDD Demo: Statistics Function
+## Statistics Function Example {.smaller}
 
-A simpler example for a short workshop:
-
+:::{.panel-tabset}
+### Test First
 ```python
-# RED phase - write test first
 def test_calculate_statistics():
     numbers = [1, 2, 3, 4, 5]
     stats = calculate_statistics(numbers)
@@ -242,8 +362,8 @@ def test_calculate_statistics():
     assert stats["average"] == 3.0
 ```
 
+### Implementation
 ```python
-# GREEN phase - implement function
 def calculate_statistics(numbers):
     if not numbers:
         raise ValueError("Cannot calculate statistics of empty list")
@@ -254,27 +374,96 @@ def calculate_statistics(numbers):
     }
 ```
 
-# Q&A and Wrap-up {background-color="#1c1c1c"}
+### Edge Cases
+```python
+def test_empty_list():
+    with pytest.raises(ValueError) as excinfo:
+        calculate_statistics([])
+    assert "empty list" in str(excinfo.value)
+    
+def test_single_value():
+    stats = calculate_statistics([42])
+    assert stats["min"] == stats["max"] == stats["average"] == 42
+```
+:::
 
-## Key Takeaways
+## TDD Benefits & Challenges {.smaller}
 
-- Testing helps create more reliable, maintainable code
-- pytest makes testing in Python straightforward
-- Start with simple unit tests and expand
-- TDD can help guide your development process
-- Practice is essential to get comfortable with testing
+:::{.columns}
+:::{.column width="50%"}
+**Benefits**
+- Forces clear requirements
+- Prevents over-engineering
+- Built-in regression testing
+- Improves API design
+- Documentation by example
+:::
 
-## Resources
+:::{.column width="50%"}
+**Challenges**
+- Learning curve
+- Requires discipline
+- Can slow initial development
+- Test maintenance
+- "Test-induced design damage"
+:::
+:::
 
+:::{.fragment}
+::::{.callout-tip}
+Start small and build your testing habit incrementally!
+::::
+:::
+
+## Poll Question {.poll background-color="#0a0a0a"}
+
+::: {.poll-question}
+**How might TDD change your workflow?**
+:::
+
+:::{.columns}
+:::{.column width="50%"}
+A. Initial slowdown but long-term gain  
+B. Clarify requirements before coding 
+:::
+:::{.column width="50%"}
+C. Improve my code architecture  
+D. Still not convinced it's worth it
+:::
+:::
+
+# Wrap-up {background-color="#053660" .center}
+
+## Key Takeaways {.smaller}
+
+::: {.incremental}
+1. **Testing is an investment** in code quality and maintainability
+2. **pytest makes testing approachable** with simple syntax and powerful features
+3. **Start with simple unit tests** and build from there
+4. **TDD can guide development** and improve your software design
+5. **Practice is essential** to get comfortable with testing
+:::
+
+## Resources {.smaller}
+
+:::{.columns}
+:::{.column width="60%"}
 - [pytest Documentation](https://docs.pytest.org/)
-- [Python Testing with pytest (Book by Brian Okken)](https://pragprog.com/titles/bopytest2/python-testing-with-pytest-second-edition/)
-- [Effective Python Testing with pytest (Real Python)](https://realpython.com/pytest-python-testing/)
-- Workshop repository: [github.com/cauliyang/python-testing-workshop](https://github.com/cauliyang/python-testing-workshop)
+- [Python Testing with pytest (Brian Okken)](https://pragprog.com/titles/bopytest2/python-testing-with-pytest-second-edition/)
+- [Real Python Testing Guides](https://realpython.com/pytest-python-testing/)
+- Workshop materials: [github.com/cauliyang/python-testing-workshop](https://github.com/cauliyang/python-testing-workshop)
+:::
 
-## Thank You!
+:::{.column width="40%"}
+![](https://pytest.org/en/7.3.x/_static/pytest_logo_curves.svg){width="70%" fig-align="center"}
+:::
+:::
 
-Please share your feedback on the workshop!
+## Thank You! {.center background-color="#053660"}
 
-Contact: [yangyang.li@northwestern.edu](yangyang.li@northwestern.edu)
+:::{.r-fit-text}
+Questions?
+:::
 
+Contact: [yangyang.li@northwestern.edu](mailto:yangyang.li@northwestern.edu)  
 GitHub: [@cauliyang](https://github.com/cauliyang)
