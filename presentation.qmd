@@ -1,0 +1,238 @@
+---
+title: "The Next Step in Python: Testing with pytest"
+author: "Yangyang Li"
+date: "May 5, 2025"
+format:
+  revealjs:
+    theme: simple
+    transition: slide
+    slide-number: true
+    incremental: true
+    code-fold: false
+    highlight-style: github
+    scrollable: true
+---
+
+## Welcome!
+
+### Python Testing with pytest
+*A one-hour workshop on making your code more reliable*
+
+- Please ensure you have Python 3.10+ installed
+- Install pytest: `pip install pytest`
+- Download workshop materials from the repository
+
+## Workshop Structure (1 hour)
+
+1. Introduction to Testing (10 min)
+2. Getting Started with pytest (15 min)
+3. Writing Effective Test Cases (15 min)
+4. Test-Driven Development in Practice (15 min)
+5. Q&A and Wrap-up (5 min)
+
+# Part 1: Introduction to Testing {background-color="#1c1c1c"}
+
+## Why Test Your Code?
+
+- Find bugs before your users do
+- Make changes with confidence
+- Document how your code should work
+- Enable refactoring and code improvement
+- Professional development practice
+
+## Poll Question
+
+::: {.poll}
+**How much experience do you have with testing Python code?**
+
+A. None - I'm completely new to testing  
+B. Minimal - I've written a few basic tests  
+C. Moderate - I use pytest occasionally  
+D. Experienced - I practice TDD regularly
+:::
+
+## Types of Tests
+
+- **Unit tests**: Test individual functions/methods in isolation
+- **Integration tests**: Test multiple components working together
+- **Functional tests**: Test the complete application flow
+- **Regression tests**: Ensure bugs don't return
+
+## Testing Terminology
+
+- **Test case**: A function that tests a specific feature
+- **Fixtures**: Setup code for tests
+- **Assertions**: Statements that verify expected outcomes
+- **Mocks/Stubs**: Replace real objects with testing versions
+- **Coverage**: Measurement of code tested
+
+# Part 2: Getting Started with pytest {background-color="#1c1c1c"}
+
+## Why pytest?
+
+- Simple syntax compared to unittest
+- Rich assertion introspection
+- Powerful fixture system
+- Extensive plugin ecosystem
+- Easy parametrization
+
+## Basic pytest Structure
+
+```python
+# test_example.py
+def test_addition():
+    assert 1 + 1 == 2
+    
+def test_string_methods():
+    assert "hello".upper() == "HELLO"
+    assert "world".capitalize() == "World"
+```
+
+Run with: `pytest test_example.py -v`
+
+## Live Exercise
+
+::: {.exercise}
+**Let's write a test together!**
+
+1. Create a file called `calculator.py` with a simple add function
+2. Create `test_calculator.py` with a test for the add function
+3. Run pytest and see the results
+:::
+
+## Poll Question
+
+::: {.poll}
+**What's the most challenging part of testing for you?**
+
+A. Setting up test environments  
+B. Writing effective assertions  
+C. Knowing what to test  
+D. Finding time to write tests  
+E. Something else (share in chat)
+:::
+
+# Part 3: Writing Effective Test Cases {background-color="#1c1c1c"}
+
+## Anatomy of a Good Test
+
+- **Arrange**: Set up test data and conditions
+- **Act**: Execute the code being tested
+- **Assert**: Verify the results match expectations
+
+## Example: Testing a User Class
+
+```python
+# user.py
+class User:
+    def __init__(self, name, email):
+        self.name = name
+        self.email = email
+        
+    def is_valid_email(self):
+        return '@' in self.email and '.' in self.email
+
+# test_user.py
+def test_valid_email():
+    # Arrange
+    user = User('Test', 'test@example.com')
+    # Act
+    result = user.is_valid_email()
+    # Assert
+    assert result is True
+```
+
+## Parameterized Tests
+
+```python
+import pytest
+
+@pytest.mark.parametrize("email,expected", [
+    ("test@example.com", True),
+    ("invalid-email", False),
+    ("another@test.org", True),
+    ("missing-dot@com", False),
+])
+def test_email_validation(email, expected):
+    user = User('Test', email)
+    assert user.is_valid_email() is expected
+```
+
+## Audience Question
+
+::: {.poll}
+**What elements of your code are you most interested in testing?**
+
+A. Functions with calculations  
+B. Data validation logic  
+C. API interactions  
+D. Database operations  
+E. Other (share in chat)
+:::
+
+# Part 4: Test-Driven Development {background-color="#1c1c1c"}
+
+## The TDD Cycle
+
+1. **Red**: Write a failing test
+2. **Green**: Write the simplest code that passes
+3. **Refactor**: Improve code without changing behavior
+
+![TDD Cycle: Red-Green-Refactor](https://upload.wikimedia.org/wikipedia/commons/0/0b/TDD_Global_Lifecycle.png)
+
+## TDD Demo: Building a Shopping Cart
+
+Let's apply TDD to build a simple shopping cart with:
+
+1. Add items
+2. Remove items
+3. Calculate total
+4. Apply discounts
+
+## TDD Live Exercise
+
+::: {.exercise}
+**Try it yourself!**
+
+1. Write a test for a `calculate_statistics` function
+2. Function should return min, max, and average of a list
+3. Implement the function to pass the test
+4. Refactor if needed
+:::
+
+## Discussion Question
+
+::: {.poll}
+**How might TDD change your current development workflow?**
+
+A. It would slow me down initially  
+B. It would help me clarify requirements  
+C. It would improve my code quality  
+D. It wouldn't work well for my projects  
+E. Other (share in chat)
+:::
+
+# Q&A and Wrap-up {background-color="#1c1c1c"}
+
+## Key Takeaways
+
+- Testing helps create more reliable, maintainable code
+- pytest makes testing in Python straightforward
+- Start with simple unit tests and expand
+- TDD can help guide your development process
+- Practice is essential to get comfortable with testing
+
+## Resources
+
+- [pytest Documentation](https://docs.pytest.org/)
+- [Python Testing with pytest (Book by Brian Okken)](https://pragprog.com/titles/bopytest2/python-testing-with-pytest-second-edition/)
+- [Effective Python Testing with pytest (Real Python)](https://realpython.com/pytest-python-testing/)
+- Workshop repository: [github.com/cauliyang/python-testing-workshop](https://github.com/cauliyang/python-testing-workshop)
+
+## Thank You!
+
+Please share your feedback on the workshop!
+
+Contact: [yangyang.li@northwestern.edu](yangyang.li@northwestern.edu)
+
+GitHub: [@cauliyang](https://github.com/cauliyang)
