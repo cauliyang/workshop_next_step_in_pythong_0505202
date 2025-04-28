@@ -11,6 +11,8 @@ format:
     code-fold: false
     highlight-style: github
     scrollable: true
+    echo: true
+    eval: false
     css: custom.css
     footer: "Python Testing Workshop | Yangyang Li | May 2025"
     logo: "https://pytest.org/en/7.3.x/_static/pytest_logo_curves.svg"
@@ -122,16 +124,16 @@ D. Experienced - I practice TDD regularly
 
 ::: {.columns}
 ::: {.column width="50%"}
-**Advantages**
-- Simple, Pythonic syntax
-- Rich assertion messages
-- Powerful fixtures & plugins
+**Advantages**<br>
+- Simple, Pythonic syntax<br>
+- Rich assertion messages<br>
+- Powerful fixtures & plugins<br>
 - Easy parameterization
 :::
 
 ::: {.column width="50%"}
 **vs. unittest**
-```python
+```{python}
 # unittest
 self.assertEqual(1 + 1, 2)
 
@@ -150,12 +152,15 @@ pip install pytest
 
 ## Basic pytest Structure {.smaller}
 
-```python
+```{python}
+# | code-line-numbers: "|9,10"
+
 # test_example.py
 def test_addition():
     # Simple assertions
     assert 1 + 1 == 2
-    
+
+
 def test_string_methods():
     # pytest shows values on failure
     assert "hello".upper() == "HELLO"
@@ -180,15 +185,18 @@ pytest test_example.py -v
 :::
 
 1. Create `calculator.py` with basic functions:
-   ```python
+   ```{python}
    def add(a, b): 
        return a + b
    ```
 
 2. Write `test_calculator.py`:
-   ```python
+   ```{python}
+   # | code-line-numbers: "|5,6"
+
    from calculator import add
    
+
    def test_add():
        assert add(1, 2) == 3
        assert add(-1, 1) == 0
@@ -207,8 +215,10 @@ pytest test_example.py -v
 ## The AAA Pattern {auto-animate=true .smaller}
 
 ::: {.columns}
-::: {.column width="60%"}
-```python
+::: {.column width="50%"}
+```{python}
+#| code-line-numbers: "|3,4|6,7|9,10"
+ 
 # Testing a User class
 def test_valid_email():
     # Arrange
@@ -222,8 +232,8 @@ def test_valid_email():
 ```
 :::
 
-::: {.column width="40%"}
-```python
+::: {.column width="50%"}
+```{python}
 class User:
     def __init__(self, name, email):
         self.name = name
@@ -260,7 +270,8 @@ def test_email_invalid_no_dot():
 :::{.column}
 **After**
 
-```python
+```{python}
+#| code-line-numbers: "|3-8"
 import pytest
 
 @pytest.mark.parametrize("email,expected", [
@@ -345,7 +356,7 @@ def apply_discount(self, percentage):
     
 def total(self):
     subtotal = sum(self.items.values())
-    return subtotal * (1 - getattr(self, '_discount', 0))
+    return subtotal * (1 - self._discount)
 ```
 :::
 
@@ -391,7 +402,7 @@ def test_single_value():
 
 :::{.columns}
 :::{.column width="50%"}
-**Benefits**
+**Benefits**<br>
 - Forces clear requirements<br>
 - Prevents over-engineering<br>
 - Built-in regression testing<br>
@@ -400,7 +411,7 @@ def test_single_value():
 :::
 
 :::{.column width="50%"}
-**Challenges**
+**Challenges**<br>
 - Learning curve<br>
 - Requires discipline<br>
 - Can slow initial development<br>
