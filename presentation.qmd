@@ -392,19 +392,19 @@ def test_single_value():
 :::{.columns}
 :::{.column width="50%"}
 **Benefits**
-- Forces clear requirements
-- Prevents over-engineering
-- Built-in regression testing
-- Improves API design
+- Forces clear requirements<br>
+- Prevents over-engineering<br>
+- Built-in regression testing<br>
+- Improves API design<br>
 - Documentation by example
 :::
 
 :::{.column width="50%"}
 **Challenges**
-- Learning curve
-- Requires discipline
-- Can slow initial development
-- Test maintenance
+- Learning curve<br>
+- Requires discipline<br>
+- Can slow initial development<br>
+- Test maintenance<br>
 - "Test-induced design damage"
 :::
 :::
