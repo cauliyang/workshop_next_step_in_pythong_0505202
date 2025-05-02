@@ -219,7 +219,7 @@ pyrightconfig.json
 
 # quarto project
 .qmd-cache/
-*.html
+# *.html
 *_files/
 
 # End of https://www.toptal.com/developers/gitignore/api/python,jupyternotebooks,macos
