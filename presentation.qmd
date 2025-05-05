@@ -18,7 +18,14 @@ format:
     logo: "https://pytest.org/en/7.3.x/_static/pytest_logo_curves.svg"
 ---
 
+## 
+![](./nsip_spring_2025/Slide1.png){fig-align="center" width="100%"}
+
+## 
+![](./nsip_spring_2025/Slide3.png){fig-align="center" width="100%"}
+
 ## {.center .middle background-color="#053660"}
+
 
 :::{.r-fit-text}
 Python Testing with pytest

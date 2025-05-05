@@ -222,4 +222,5 @@ pyrightconfig.json
 # *.html
 *_files/
 
+nsip_spring_2025*
 # End of https://www.toptal.com/developers/gitignore/api/python,jupyternotebooks,macos
