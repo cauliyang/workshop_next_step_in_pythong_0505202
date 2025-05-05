@@ -213,6 +213,45 @@ pytest test_example.py -v
 
 # Writing Effective Tests {background-color="#053660" .center}
 
+## Python Classes Refresher {.smaller}
+
+::: {.columns}
+::: {.column width="60%"}
+**Classes in Python**
+
+- Blueprint for creating objects
+- Encapsulate data (attributes) and behavior (methods)
+- Create with the `class` keyword
+- Instantiate with `object = ClassName()`
+- `self` refers to the instance
+
+```python
+class Calculator:
+    def __init__(self, initial_value=0):
+        self.result = initial_value
+        
+    def add(self, value):
+        self.result += value
+        return self.result
+```
+:::
+
+::: {.column width="40%"}
+**Using a Class**
+```python
+# Create an instance
+calc = Calculator(10)
+
+# Call methods
+calc.add(5)  # returns 15
+calc.add(3)  # returns 18
+
+# Access attributes
+print(calc.result)  # 18
+```
+:::
+:::
+
 ## The AAA Pattern {auto-animate=true}
 
 :::{.r-fit-text}
@@ -469,7 +508,7 @@ D. Still not convinced it's worth it
 - [pytest Documentation](https://docs.pytest.org/)
 - [Python Testing with pytest (Brian Okken)](https://pragprog.com/titles/bopytest2/python-testing-with-pytest-second-edition/)
 - [Real Python Testing Guides](https://realpython.com/pytest-python-testing/)
-- Workshop materials: [github.com/cauliyang/python-testing-workshop](https://github.com/cauliyang/python-testing-workshop)
+- Workshop materials: [https://github.com/nuitrcs/testing_with_pytest](https://github.com/nuitrcs/testing_with_pytest)
 :::
 
 :::{.column width="40%"}
