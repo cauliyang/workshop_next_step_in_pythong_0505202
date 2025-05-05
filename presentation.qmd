@@ -112,16 +112,16 @@ D. Experienced - I practice TDD regularly
 
 ::: {.columns}
 ::: {.column width="50%"}
-**Unit tests**
-- Test individual functions
-- Fast, isolated
+**Unit tests**<br>
+- Test individual functions<br>
+- Fast, isolated<br>
 - Many tests
 :::
 
 ::: {.column width="50%"}
-**Integration tests**
-- Test component interaction
-- Fewer, more complex
+**Integration tests**<br>
+- Test component interaction<br>
+- Fewer, more complex<br>
 :::
 :::
 
